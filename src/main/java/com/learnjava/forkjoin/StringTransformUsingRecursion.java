@@ -12,7 +12,7 @@ import static com.learnjava.util.CommonUtil.delay;
 import static com.learnjava.util.CommonUtil.stopWatch;
 import static com.learnjava.util.LoggerUtil.log;
 
-public class StringTransformUsingRecursion extends RecursiveTask<List<String>> {
+public class StringTransformUsingRecursion extends RecursiveTask<List<String>> { //extends here is important
 
     private List<String> inputList;
 
@@ -23,12 +23,12 @@ public class StringTransformUsingRecursion extends RecursiveTask<List<String>> {
     public static void main(String[] args) {
 
         stopWatch.start();
-        List<String> names = DataSet.namesList();
+        List<String> names = DataSet.namesList(); // List.of("Bob", "Jamie", "Jill", "Rick")
         log("names : " + names);
 
         StringTransformUsingRecursion stringTransformUsingRecursion = new StringTransformUsingRecursion(names);
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        List<String> resultList = forkJoinPool.invoke(stringTransformUsingRecursion);
+        List<String> resultList = forkJoinPool.invoke(stringTransformUsingRecursion); // starting point
 
         stopWatch.stop();
         log("Final Result : " + resultList);
@@ -49,9 +49,9 @@ public class StringTransformUsingRecursion extends RecursiveTask<List<String>> {
         int midpoint = inputList.size() / 2;
         StringTransformUsingRecursion leftListTask = new StringTransformUsingRecursion(inputList.subList(0, midpoint)); //instance of ForkJoinTask
         StringTransformUsingRecursion rightListTask = new StringTransformUsingRecursion(inputList.subList(midpoint, inputList.size())); //instance of ForkJoinTask
-        invokeAll(leftListTask, rightListTask);
+        invokeAll(leftListTask, rightListTask); // recursive point
 
-        List<String> resultList = new ArrayList<>(leftListTask.join());
+        List<String> resultList = new ArrayList<>(leftListTask.join()); // join returns an unmodifiable collection
         resultList.addAll(rightListTask.join());
         return resultList;
     }
