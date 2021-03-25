@@ -10,19 +10,20 @@ import static com.learnjava.util.LoggerUtil.log;
 
 
 public class StringTransformationUsingStreams {
+    public static int delayMilliSeconds = 500;
 
     public static void main(String[] args) {
         List<String> names = DataSet.namesList(); // List.of("Bob", "Jamie", "Jill", "Rick")
         startTimer();
 
         StringTransformationUsingStreams stringTransformationUsingStreams = new StringTransformationUsingStreams();
-        List<String> resultList = stringTransformationUsingStreams.transFormStrings(names);
+        List<String> resultList = stringTransformationUsingStreams.transformStrings(names);
 
         timeTaken();
         log("Final result : " + resultList);
     }
 
-    private List<String> transFormStrings(List<String> names) {
+    public List<String> transformStrings(List<String> names) {
         return names
 //                .stream() // Total Time Taken : 2083 (4 threads)
                 .parallelStream() // Total Time Taken : 594 (4 threads)
@@ -30,8 +31,8 @@ public class StringTransformationUsingStreams {
                 .collect(Collectors.toList());
     }
 
-    private String addNameLengthTransform(String name) {
-        delay(500);
+    public String addNameLengthTransform(String name) {
+        delay(delayMilliSeconds);
         return name.length() + " - " + name;
     }
 }
