@@ -2,6 +2,7 @@ package com.learnjava.test;
 
 import java.util.List;
 
+//TODO: extract into a playground
 public class FreshFruitLottery {
 
     public int foo(List<String> codeList, List<String> shoppingCart) {

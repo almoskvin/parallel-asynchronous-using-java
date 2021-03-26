@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO: extract into a playground
 public class WordSearchRepository {
 
     public static List<List<String>> searchSuggestions(List<String> repository, String customerQuery) {
