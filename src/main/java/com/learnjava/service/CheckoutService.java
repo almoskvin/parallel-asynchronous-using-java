@@ -18,9 +18,10 @@ public class CheckoutService {
     }
 
     public CheckoutResponse checkout(Cart cart) {
+        CommonUtil.stopWatchReset();
         CommonUtil.startTimer();
         List<CartItem> expiredItems = cart.getCartItemList()
-                .stream()
+                .parallelStream()
                 .map(this::updateExpired)
                 .filter(CartItem::isExpired)
                 .collect(Collectors.toList());
