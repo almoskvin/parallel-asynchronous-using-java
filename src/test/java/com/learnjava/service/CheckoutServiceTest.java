@@ -23,7 +23,8 @@ class CheckoutServiceTest {
 
     @Test
     void checkout_static_expired_items() {
-        Cart cart = DataSet.createCart(8);
+        System.out.println("Processors available: " + Runtime.getRuntime().availableProcessors());
+        Cart cart = DataSet.createCart(25);
         CheckoutResponse checkoutResponse = checkoutService.checkout(cart);
         assertEquals(CheckoutStatus.FAILURE, checkoutResponse.getCheckoutStatus());
     }
