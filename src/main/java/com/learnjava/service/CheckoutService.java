@@ -30,7 +30,27 @@ public class CheckoutService {
         if (expiredItems.size() > 0) {
             return new CheckoutResponse(CheckoutStatus.FAILURE, expiredItems);
         }
-        return new CheckoutResponse(CheckoutStatus.SUCCESS);
+
+//        double finalPrice = calculateFinalPrice(cart);
+        double finalPrice = calculateFinalPriceReduce(cart);
+
+        System.out.println("Cart final price is " + finalPrice);
+        return new CheckoutResponse(CheckoutStatus.SUCCESS, finalPrice);
+    }
+
+    private double calculateFinalPrice(Cart cart) {
+        return cart.getCartItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getQuantity() * cartItem.getRate())
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+
+    private double calculateFinalPriceReduce(Cart cart) {
+        return cart.getCartItemList()
+                .parallelStream()
+                .map(cartItem -> cartItem.getQuantity() * cartItem.getRate())
+                .reduce(0.0, Double::sum);
     }
 
     private CartItem updateExpired(CartItem cartItem) {
